@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Command.Main;
+using System.Collections.Generic;
 
 namespace Command.Commands
 {
@@ -10,6 +11,18 @@ namespace Command.Commands
         {
             ExecuteCommand(commandToProcess);
             RegisterCommand(commandToProcess);
+        }
+
+        public void Undo()
+        {
+            if (!RegistryEmpty() && CommandBelongsToActivePlayer())
+                commandRegistry.Pop().Undo();
+        }
+        private bool RegistryEmpty() => commandRegistry.Count == 0;
+
+        private bool CommandBelongsToActivePlayer()
+        {
+             return  (commandRegistry.Peek() as UnitCommand).commandData.ActorPlayerID == GameService.Instance.PlayerService.ActivePlayerID;
         }
 
         public void ExecuteCommand(ICommand commandToExecute) => commandToExecute.Execute();
