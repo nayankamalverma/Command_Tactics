@@ -44,6 +44,7 @@ namespace Command.UI
                     break;
             }
         }
+        public void OnUndoButtonClicked() => GameService.Instance.CommandInvoker.Undo();
 
         public void ResetBattleBackgroundOverlay() => gameplayView.ResetBackgroundOverlay();
 
